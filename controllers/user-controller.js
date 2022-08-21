@@ -8,6 +8,10 @@ const userController = {
                 path: 'thoughts',
                 select: '-__v'
             })
+            .populate({
+                path: 'friends',
+                select: '-__v'
+            })
             .select('-__v')
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
@@ -76,7 +80,7 @@ const userController = {
         User.findOneAndUpdate(
             { _id: params.userId },
             { $push: { friends: params.friendId } },
-            { new: true, runValidators: true }
+            { new: true}
         )
             .then(dbUserData => {
                 if (!dbUserData) {
